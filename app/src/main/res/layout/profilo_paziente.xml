@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CBCBCB"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/User"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CBCBCB" />
+
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginBottom="10px"
+            android:layout_weight="1"
+            android:background="@color/buttonColor"
+            android:text="Test"
+            android:textColor="@color/textButtonColor" />
+
+        <Button
+            android:id="@+id/User_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginBottom="10px"
+            android:layout_weight="1"
+            android:background="@color/buttonColor"
+            android:text="User informations"
+            android:textColor="@color/textButtonColor" />
+
+        <Button
+            android:id="@+id/Test_performed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:layout_weight="1"
+            android:background="@color/buttonColor"
+            android:text="Test performed"
+            android:textColor="@color/textButtonColor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_lista"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/lista_esami"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:text="Select an exam to see more details:" />
+
+            <ListView
+                android:id="@+id/listBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:choiceMode="singleChoice"
+                android:clickable="true"
+                android:divider="@color/buttonColor"
+                android:dividerHeight="2dp"
+                android:state_pressed="false"
+                android:state_selected="false">
+
+            </ListView>
+
+            <TableLayout
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/occhio_dx"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingRight="20px"
+                        android:text="Occhio dx" />
+
+                    <TextView
+                        android:id="@+id/occhio_sx"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingRight="20px"
+                        android:text="Occhio sx" />
+
+                    <TextView
+                        android:id="@+id/perc_dx"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingRight="20px"
+                        android:text="Perc. dx" />
+
+                    <TextView
+                        android:id="@+id/perc_sx"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingRight="20px"
+                        android:text="Perc. sx" />
+
+                    <TextView
+                        android:id="@+id/perc_tot"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingRight="20px"
+                        android:text="Perc. tot" />
+
+                </TableRow>
+
+            </TableLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Email" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text="Password" />
+
+        <EditText
+            android:id="@+id/sesso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sesso" />
+
+        <EditText
+            android:id="@+id/luogoNascita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Luogo di nascita" />
+
+        <EditText
+            android:id="@+id/num_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Numero di telefono" />
+
+        <EditText
+            android:id="@+id/citta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Città" />
+
+        <EditText
+            android:id="@+id/provincia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Provincia" />
+
+        <EditText
+            android:id="@+id/nazione"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Nazione" />
+
+        <EditText
+            android:id="@+id/diottria_dx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Diottria dx" />
+
+        <EditText
+            android:id="@+id/diottria_sx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Diottria sx" />
+    </LinearLayout>
+
+</LinearLayout>
