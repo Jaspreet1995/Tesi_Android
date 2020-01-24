@@ -221,7 +221,7 @@ public class risultato_test extends Activity implements View.OnClickListener {
                 if (idPaziente.compareTo("null") == 0) {
                     //se è non registrato
 
-                    String prova = "storeuserresultsfromdoc&idapp=" + "AcuityTest" + "&username=" +
+                    String prova = "storeuserresfromdoc&idapp=" + "AcuityTest" + "&username=" +
                             username + "&docemail=" + email + "&useremail=" + emailuser + "&result="
                             + risultato_test + "&password=" + password;
 
