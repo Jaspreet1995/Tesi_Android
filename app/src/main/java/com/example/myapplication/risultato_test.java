@@ -234,7 +234,7 @@ public class risultato_test extends Activity implements View.OnClickListener {
                     Log.v(TAG, "SALVATOOO:" + prova);
                 } else {
                     //se è registrato
-                    String prova = "storeresultsnotregistered&idapp=" + "AcuityTest" + "&docemail=" +
+                    String prova = "storeresnotregistered&idapp=" + "AcuityTest" + "&docemail=" +
                             email + "&result=" + risultato_test+ "&password=" + password +
                             "&idpatient=" + idPaziente;
 
