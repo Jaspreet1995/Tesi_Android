@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ public class test extends Activity implements View.OnClickListener {
     ImageView right;
     ImageView left;
     ImageView c_land;
+    ImageView cover;
     int orientamento;
     String posizione;
     String button_click;
@@ -49,13 +51,14 @@ public class test extends Activity implements View.OnClickListener {
         pref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         editor = pref.edit();
-
+        //cover = new ImageView(this);
 
         up = (ImageView) findViewById(R.id.up);
         down = (ImageView) findViewById(R.id.down);
         right = (ImageView) findViewById(R.id.right);
         left = (ImageView) findViewById(R.id.left_1);
         c_land = (ImageView) findViewById(R.id.cland);
+        cover = (ImageView) findViewById(R.id.cover);
 
 
         up.setImageResource(R.drawable.up);
@@ -63,6 +66,7 @@ public class test extends Activity implements View.OnClickListener {
         right.setImageResource(R.drawable.up);
         left.setImageResource(R.drawable.up);
         c_land.setImageResource(R.drawable.clandolt);
+        cover.setImageResource(R.drawable.covereye);
 
         right.setOnClickListener(new View.OnClickListener() {
             //@Override
@@ -182,10 +186,24 @@ public class test extends Activity implements View.OnClickListener {
             Log.d(TAG, "STRINGGG SX: " + stringa_risultati_sx);
         } else {
             if(occhio=="dx"){
+
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                LayoutInflater factory = LayoutInflater.from(this);
+
+                final View view = factory.inflate(R.layout.alertbox_test, null);
                 alertDialog.setMessage("Cover your right eye");
+                alertDialog.setView(view);
+                alertDialog.setNeutralButton("Here!", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int sumthin) {
+                        dlg.dismiss();
+
+                   }
+                });
                 alertDialog.create();
                 alertDialog.show();
+
+
+
                 occhio="sx";
                 step=1;
             } else {
@@ -193,6 +211,7 @@ public class test extends Activity implements View.OnClickListener {
                 editor.putString("risultato_dx", stringa_risultati_dx);
                 editor.putString("risultato_sx", stringa_risultati_sx);
                 editor.commit();
+
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 alertDialog.setMessage("Test completed,bravo");
                 alertDialog.create();
