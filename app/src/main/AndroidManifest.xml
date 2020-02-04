@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Home"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login">
-        </activity>
-        <activity android:name=".Accesso_Database">
-        </activity>
-        <activity android:name=".pag_2">
-        </activity>
-        <activity android:name=".Pazienti">
-        </activity>
-        <activity android:name=".Profilo_paziente">
-        </activity>
-        <activity android:name=".Home">
-        </activity>
+        <activity android:name=".login" />
+        <activity android:name=".Accesso_Database" />
+        <activity android:name=".pag_2" />
+        <activity android:name=".Pazienti"
+            android:label="Pazienti"/>
+        <activity android:name=".Profilo_paziente" />
         <activity android:name=".tutorial">
         </activity>
         <activity android:name=".test">
         </activity>
         <activity android:name=".risultato_test">
+        </activity>
+        <activity android:name=".aggiungi_utente">
         </activity>
     </application>
 

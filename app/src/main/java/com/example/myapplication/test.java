@@ -58,7 +58,7 @@ public class test extends Activity implements View.OnClickListener {
         right = (ImageView) findViewById(R.id.right);
         left = (ImageView) findViewById(R.id.left_1);
         c_land = (ImageView) findViewById(R.id.cland);
-        cover = (ImageView) findViewById(R.id.cover);
+        cover = (ImageView) findViewById(R.id.cland);
 
 
         up.setImageResource(R.drawable.up);

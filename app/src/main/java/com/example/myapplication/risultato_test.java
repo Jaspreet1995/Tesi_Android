@@ -43,6 +43,7 @@ public class risultato_test extends Activity implements View.OnClickListener {
     String username;
     String emailuser;
 
+
     Accesso_Database p;
 
     SharedPreferences pref;

@@ -1,11 +1,15 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +17,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -36,6 +41,19 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
     Button user_informations;
     Button test_performed;
     LinearLayout temp = null;
+    Button modifica;
+    Button salva;
+
+    EditText email_text;
+    EditText password_text;
+    EditText sesso;
+    EditText luogoNascita;
+    EditText num_tel;
+    EditText citta;
+    EditText provincia;
+    EditText nazione;
+    EditText diottria_dx;
+    EditText diottria_sx;
 
     Accesso_Database p;
     String ListaRisultati;
@@ -73,7 +91,16 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
         email = pref.getString("user", null);
         password = pref.getString("password", null);
 
+        //recupero l'immagine profilo dell'utente
+        p = new Accesso_Database("getfotoprofilo&username=" + username);
+        if(p.finale.contains("status:Error")){
 
+        }else{
+            String img = p.finale.substring(p.finale.indexOf("{")+1, p.finale.indexOf("}"));
+            Bitmap foto_profilo = StringToBitMap(img);
+            ImageView iv = (ImageView) findViewById(R.id.imageView);
+            iv.setImageBitmap(foto_profilo);
+        }
 
         //controllo se è un paziente registrato o non registrato
         String user_type;
@@ -98,6 +125,7 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
         listBox = findViewById(R.id.listBox);
 
         creaLista();
+        setPatientInfo();
 
         test = findViewById(R.id.test);
         user_informations = findViewById(R.id.User_info);
@@ -106,6 +134,12 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
         test.setOnClickListener(this);
         user_informations.setOnClickListener(this);
         test_performed.setOnClickListener(this);
+
+        modifica = findViewById(R.id.modificaDati);
+        salva = findViewById(R.id.salva);
+
+        modifica.setOnClickListener(this);
+        salva.setOnClickListener(this);
 
     }
 
@@ -126,6 +160,14 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
                 showAreaTest();
                 break;
 
+            case R.id.modificaDati:
+                modificaDati();
+                break;
+
+            case R.id.salva:
+                salva();
+                break;
+
             default:
                 break;
         }
@@ -144,7 +186,6 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
             p = new Accesso_Database("getResultList&docemail=" + email + "&password=" + password + "&username=" + "null" +
                     "&idpatient=" + idPaziente + "&idapp=" + "AcuityTest");
         }
-
 
         ListaRisultati = p.finale;
         if(ListaRisultati.contains("status:Error")){
@@ -197,11 +238,12 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
 
 
         listaRisultatiTest =  p.finale;
-        //Log.d("prova", clickItemObj.toString());
+        //Log.d("prova", ""+table.getChildCount());
         listaRisultatiTest = listaRisultatiTest.substring(listaRisultatiTest.indexOf("{")+1, listaRisultatiTest.indexOf("}"));
         singoloRisultato = listaRisultatiTest.split("/");
 
         TableLayout table = (TableLayout) findViewById(R.id.table);
+        //Log.d("prova", ""+table.getChildCount());
 
         singoloRisultato[0] = singoloRisultato[0].substring(3,singoloRisultato[0].length());
         singoloRisultato[1] = singoloRisultato[1].substring(3,singoloRisultato[1].length());
@@ -210,6 +252,7 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
         singoloRisultato[4] = singoloRisultato[4].substring(4,singoloRisultato[4].length());
 
         String riga;
+
 
         for (int i = 0; i <= singoloRisultato[0].split("-").length-1; i++) {
 
@@ -269,23 +312,25 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
         LinearLayout container_lista = findViewById(R.id.container_lista);
         LinearLayout container_info = findViewById(R.id.container_info);
         LinearLayout container_button = findViewById(R.id.button_container);
+        LinearLayout container_scroll = findViewById(R.id.container_scroll);
 
 
+        //ViewGroup parent = (ViewGroup) container_button.getParent();
+        ViewGroup parent = (ViewGroup) container_scroll;
 
-        ViewGroup parent = (ViewGroup) container_button.getParent();
+        String s = container_scroll.getChildAt(0).toString();
 
-        String s = parent.getChildAt(3).toString();
         s = s.substring(0,s.length()-1).split("/")[1];
 
         if(s.compareTo("container_info")==0){
 
         }else{
             temp = container_lista;
-            parent.getChildAt(4).setVisibility(View.VISIBLE);
-            parent.removeViewAt(3);
+            parent.getChildAt(1).setVisibility(View.VISIBLE);
+            parent.removeViewAt(0);
             //parent.addView(container_info,3);
-            parent.addView(temp,4);
-            parent.getChildAt(4).setVisibility(View.INVISIBLE);
+            parent.addView(temp,1);
+            parent.getChildAt(1).setVisibility(View.INVISIBLE);
         }
 
     }
@@ -294,21 +339,115 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
         LinearLayout container_lista = findViewById(R.id.container_lista);
         LinearLayout container_info = findViewById(R.id.container_info);
         LinearLayout container_button = findViewById(R.id.button_container);
+        LinearLayout container_scroll = findViewById(R.id.container_scroll);
 
-        ViewGroup parent = (ViewGroup) container_button.getParent();
+        ViewGroup parent = (ViewGroup) container_scroll;
 
-        String s = parent.getChildAt(3).toString();
+        String s = parent.getChildAt(0).toString();
         s = s.substring(0,s.length()-1).split("/")[1];
 
         if(s.compareTo("container_lista")==0){
 
         }else{
             temp = container_info;
-            parent.getChildAt(4).setVisibility(View.VISIBLE);
-            parent.removeViewAt(3);
-            parent.addView(temp,4);
-            parent.getChildAt(4).setVisibility(View.INVISIBLE);
+            parent.getChildAt(1).setVisibility(View.VISIBLE);
+            parent.removeViewAt(0);
+            parent.addView(temp,1);
+            parent.getChildAt(1).setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    public void setPatientInfo(){
+
+        p = new Accesso_Database("getPatientAdditionalInfo&username=" + username +
+                "&idapp=AcuityTest");
+
+        String additionalInfo = p.finale;
+        additionalInfo = additionalInfo.substring(additionalInfo.indexOf("{")+1, additionalInfo.indexOf("}"));
+        Log.d("sonoq", additionalInfo);
+        String[] infoPatient = additionalInfo.split("-");
+        email_text = findViewById(R.id.email);
+        password_text = findViewById(R.id.password);
+        sesso = findViewById(R.id.sesso);
+        luogoNascita = findViewById(R.id.luogoNascita);
+        num_tel = findViewById(R.id.num_tel);
+        citta = findViewById(R.id.citta);
+        provincia = findViewById(R.id.provincia);
+        nazione = findViewById(R.id.nazione);
+        diottria_dx = findViewById(R.id.diottria_dx);
+        diottria_sx = findViewById(R.id.diottria_sx);
+
+        disable_field();
+
+        email_text.setText(email);
+        password_text.setText(password);
+        sesso.setText(infoPatient[0]);
+        luogoNascita.setText(infoPatient[1]);
+        num_tel.setText(infoPatient[2]);
+        citta.setText(infoPatient[3]);
+        provincia.setText(infoPatient[4]);
+        nazione.setText(infoPatient[5]);
+        diottria_dx.setText(infoPatient[6]);
+        diottria_sx.setText(infoPatient[7]);
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
+
+    public void modificaDati(){
+        Log.d("qui","sono qui");
+        sesso.setEnabled(true);
+        num_tel.setEnabled(true);
+        citta.setEnabled(true);
+        provincia.setEnabled(true);
+        nazione.setEnabled(true);
+        diottria_dx.setEnabled(true);
+        diottria_sx.setEnabled(true);
+        salva.setVisibility(View.VISIBLE);
+        modifica.setVisibility(View.INVISIBLE);
+    }
+
+    public void salva(){
+
+        String temp = luogoNascita.getText().toString().replace(" ","[]");
+
+        p = new Accesso_Database("updatePatientInfo&username=" + username +
+                "&idapp=AcuityTest"+"&numero_telefono_pat="+num_tel.getText()+"&luogo_di_nascita_pat="+temp+"&sessopat="+sesso.getText()+"&citta_pat="+citta.getText()+"&provincia_pat="+provincia.getText()+
+                "&nazione_pat="+nazione.getText()+"&diottria_dx_pat="+diottria_dx.getText()+"&diottria_sx_pat="+diottria_sx.getText());
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        if(p.finale.contains("status:error_in_data_saving")){
+            alertDialog.setMessage("Error_in_data_saving");
+        }else{
+            alertDialog.setMessage("Data saved");
+            disable_field();
+            modifica.setVisibility(View.VISIBLE);
+            salva.setVisibility(View.INVISIBLE);
+        }
+        alertDialog.create();
+        alertDialog.show();
+    }
+
+    public void disable_field(){
+        email_text.setEnabled(false);
+        password_text.setEnabled(false);
+        sesso.setEnabled(false);
+        luogoNascita.setEnabled(false);
+        num_tel.setEnabled(false);
+        citta.setEnabled(false);
+        provincia.setEnabled(false);
+        nazione.setEnabled(false);
+        diottria_dx.setEnabled(false);
+        diottria_sx.setEnabled(false);
     }
 }

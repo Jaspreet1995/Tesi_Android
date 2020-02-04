@@ -22,7 +22,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Pazienti extends Activity implements View.OnClickListener {
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+public class Pazienti extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences pref;
     public static final String MyPREFERENCES = "MyPrefs";
@@ -41,6 +62,12 @@ public class Pazienti extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pazienti);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+
         pref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         editor = pref.edit();
@@ -57,11 +84,6 @@ public class Pazienti extends Activity implements View.OnClickListener {
 
         utenti = ListaUtenti.substring(ListaUtenti.indexOf("{")+1,ListaUtenti.indexOf("}")).split((","));
         init(utenti);
-
-    }
-
-    @Override
-    public void onClick(View v) {
 
     }
 
@@ -92,6 +114,7 @@ public class Pazienti extends Activity implements View.OnClickListener {
             tv3.setText(singoli_dati[5]);
             tv4.setText(singoli_dati[1]);
             tv5.setText(singoli_dati[0]);
+            tv5.setVisibility(View.INVISIBLE);
             row1.addView(tv0);
             row1.addView(tv1);
             row1.addView(tv2);
@@ -123,4 +146,50 @@ public class Pazienti extends Activity implements View.OnClickListener {
 
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (item.getItemId() == android.R.id.home) {
+            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            TypedValue tv = new TypedValue();
+            int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+
+
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.nav_doctor, null, false),width,height, true);
+
+            pw.showAtLocation(this.findViewById(R.id.main), 0,0, 0);
+
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        SharedPreferences.Editor editor = pref.edit();
+        int id= v.getId();
+        switch(id)
+        {
+            case R.id.menu_aggiungi_utente:
+                startActivity(new Intent(this, aggiungi_utente.class));
+                Log.d("si","click1");
+                break;
+
+            case R.id.menu_home:
+                startActivity(new Intent(this, Pazienti.class));
+                break;
+
+            case R.id.menu_logout:
+                editor.clear();
+                editor.commit();
+                startActivity(new Intent(this, login.class));
+                break;
+        }
+    }
 }

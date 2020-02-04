@@ -1,5 +1,4 @@
 package com.example.myapplication;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -47,7 +46,7 @@ public class pag_2 extends Activity implements View.OnClickListener {
         password = pref.getString("password",null);
 
         p = new Accesso_Database("authenticatePatient&useremail=" + user +
-                 "&idapp=" + "AcuityTest" + "&password=" + password );
+                "&idapp=" + "AcuityTest" + "&password=" + password );
 
         ListaUtenti = p.finale;
         utenti = ListaUtenti.substring(ListaUtenti.indexOf("{")+1,ListaUtenti.indexOf("}")).split((","));
@@ -86,7 +85,7 @@ public class pag_2 extends Activity implements View.OnClickListener {
             //è stato cliccato un utente, quindi inserisco in sessione lo username
             editor.putString("username", clickItemObj.toString());
             editor.commit();
-            startActivity(new Intent(pag_2.this, tutorial.class));
+            startActivity(new Intent(pag_2.this, Home.class));
             //Toast.makeText(pag_2.this, "You clicked " + clickItemObj.toString(), Toast.LENGTH_SHORT).show();
 
         }
