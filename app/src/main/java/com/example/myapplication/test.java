@@ -13,6 +13,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+
+
 import androidx.annotation.Nullable;
 
 import java.util.Random;
@@ -58,7 +60,7 @@ public class test extends Activity implements View.OnClickListener {
         right = (ImageView) findViewById(R.id.right);
         left = (ImageView) findViewById(R.id.left_1);
         c_land = (ImageView) findViewById(R.id.cland);
-        cover = (ImageView) findViewById(R.id.cland);
+        //cover = (ImageView) findViewById(R.id.cland);
 
 
         up.setImageResource(R.drawable.up);
@@ -66,7 +68,7 @@ public class test extends Activity implements View.OnClickListener {
         right.setImageResource(R.drawable.up);
         left.setImageResource(R.drawable.up);
         c_land.setImageResource(R.drawable.clandolt);
-        cover.setImageResource(R.drawable.covereye);
+        //cover.setImageResource(R.drawable.covereye);
 
         right.setOnClickListener(new View.OnClickListener() {
             //@Override
@@ -191,14 +193,15 @@ public class test extends Activity implements View.OnClickListener {
                 LayoutInflater factory = LayoutInflater.from(this);
 
                 final View view = factory.inflate(R.layout.alertbox_test, null);
-                alertDialog.setMessage("Cover your right eye");
+               // alertDialog.setMessage("Cover your right eye");
                 alertDialog.setView(view);
-                alertDialog.setNeutralButton("Here!", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dlg, int sumthin) {
-                        dlg.dismiss();
+             //   alertDialog.setNeutralButton("Go on!", new DialogInterface.OnClickListener() {
+               //     public void onClick(DialogInterface dlg, int sumthin) {
+               //         dlg.dismiss();
 
-                   }
-                });
+                   //}
+                //});
+
                 alertDialog.create();
                 alertDialog.show();
 
