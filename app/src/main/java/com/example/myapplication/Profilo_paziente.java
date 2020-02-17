@@ -94,7 +94,9 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
         //recupero l'immagine profilo dell'utente
         p = new Accesso_Database("getfotoprofilo&username=" + username);
         if(p.finale.contains("status:Error")){
-
+            ImageView iv = (ImageView) findViewById(R.id.imageView);
+            Bitmap foto_profilo = BitmapFactory.decodeResource(getResources(), R.drawable.user);
+            iv.setImageBitmap(foto_profilo);
         }else{
             String img = p.finale.substring(p.finale.indexOf("{")+1, p.finale.indexOf("}"));
             Bitmap foto_profilo = StringToBitMap(img);
@@ -420,22 +422,41 @@ public class Profilo_paziente extends Activity implements View.OnClickListener {
     public void salva(){
 
         String temp = luogoNascita.getText().toString().replace(" ","[]");
+        int corretto; //0 si, 1 no
+        String msg_errore = "";
 
-        p = new Accesso_Database("updatePatientInfo&username=" + username +
-                "&idapp=AcuityTest"+"&numero_telefono_pat="+num_tel.getText()+"&luogo_di_nascita_pat="+temp+"&sessopat="+sesso.getText()+"&citta_pat="+citta.getText()+"&provincia_pat="+provincia.getText()+
-                "&nazione_pat="+nazione.getText()+"&diottria_dx_pat="+diottria_dx.getText()+"&diottria_sx_pat="+diottria_sx.getText());
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        if(p.finale.contains("status:error_in_data_saving")){
-            alertDialog.setMessage("Error_in_data_saving");
+        if(num_tel.getText().length()==0 || num_tel.getText().length()==10){
+            corretto = 0;
         }else{
-            alertDialog.setMessage("Data saved");
-            disable_field();
-            modifica.setVisibility(View.VISIBLE);
-            salva.setVisibility(View.INVISIBLE);
+            corretto = 1;
+            msg_errore = "Dati errati: verificare la correttezza del numero di telefono e che tutti i dati siano formalmente corretti";
         }
-        alertDialog.create();
-        alertDialog.show();
+
+        if(corretto==0){
+            p = new Accesso_Database("updatePatientInfo&username=" + username +
+                    "&idapp=AcuityTest"+"&numero_telefono_pat="+num_tel.getText()+"&luogo_di_nascita_pat="+temp+"&sessopat="+sesso.getText()+"&citta_pat="+citta.getText()+"&provincia_pat="+provincia.getText()+
+                    "&nazione_pat="+nazione.getText()+"&diottria_dx_pat="+diottria_dx.getText()+"&diottria_sx_pat="+diottria_sx.getText());
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            if(p.finale.contains("status:error_in_data_saving")){
+                alertDialog.setMessage("Error_in_data_saving");
+            }else{
+                alertDialog.setMessage("Data saved");
+                disable_field();
+                modifica.setVisibility(View.VISIBLE);
+                salva.setVisibility(View.INVISIBLE);
+            }
+            alertDialog.create();
+            alertDialog.show();
+        }else{
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setMessage(msg_errore);
+
+            alertDialog.create();
+            alertDialog.show();
+        }
+
     }
 
     public void disable_field(){

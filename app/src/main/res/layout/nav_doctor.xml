@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#B8B9B9"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/menu_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/ic_home_black_24dp"
+        android:gravity="left|center_vertical"
+        android:onClick="onClick"
+        android:text="Home" />
+
+    <Button
+        android:id="@+id/menu_aggiungi_utente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="Aggiungi utente"
+        android:drawableRight="@drawable/ic_person_add_black_24dp"
+        android:gravity="left|center_vertical"/>
+
+    <Button
+        android:id="@+id/menu_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="Logout"
+        android:drawableRight="@drawable/ic_menu_send"
+        android:gravity="left|center_vertical"/>
+
+</LinearLayout>
